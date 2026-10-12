@@ -1,0 +1,40 @@
+name: barrel_go
+publish_to: 'none'
+description: barrelGo shipping platform
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  url_launcher: ^6.3.3
+  file_selector: ^1.1.0
+  pdf: ^3.13.1
+  printing: ^5.15.1
+  web: ^1.1.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+  fonts:
+    - family: Open Sans
+      fonts:
+        - asset: assets/fonts/open_sans_regular.ttf
+          weight: 400
+        - asset: assets/fonts/open_sans_bold.ttf
+          weight: 700
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins_bold.ttf
+          weight: 700

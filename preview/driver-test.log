@@ -1,0 +1,10 @@
+00:00 +0: loading C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_driver_test.dart
+00:00 +0: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_driver_test.dart: (setUpAll)
+00:00 +0: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_driver_test.dart: Delivery requires ordered steps and confirmation, gains credit once
+00:00 +1: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_driver_test.dart: Driver desktop screenshots and complete delivery
+00:04 +2: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_public_home_test.dart: Public homepage renders full desktop proposal and services
+00:05 +3: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_driver_test.dart: Driver mobile menu and unavailable acceptance
+00:05 +4: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_public_home_test.dart: Public homepage opens login and client can return to public homepage
+00:06 +5: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_public_home_test.dart: Driver login is accessible and mobile links scroll
+00:07 +6: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_public_home_test.dart: (tearDownAll)
+00:07 +6: All tests passed!

@@ -1,0 +1,13 @@
+00:00 +0: loading C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart
+00:00 +0: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: (setUpAll)
+00:00 +0: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: Ships4US desktop navigation and screenshot
+00:01 +1: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: Ships4US desktop navigation and screenshot
+00:02 +2: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: Ships4US desktop navigation and screenshot
+00:03 +3: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: Ships4US desktop navigation and screenshot
+00:03 +4: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/widget_test.dart: Client space login opens dashboard and shipment shortcuts
+00:04 +5: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/widget_test.dart: Client space login opens dashboard and shipment shortcuts
+00:04 +6: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: Reservation validates and completes four steps
+00:05 +7: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/ships_client_test.dart: Reservation validates and completes four steps
+00:05 +8: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/widget_test.dart: Client dashboard menu can open login from guest mode
+00:06 +9: C:/Users/ASUS/Desktop/Projet USA-TG/ships4us_client_mobile_modular/test/widget_test.dart: Client space includes frontend registration and recovery flows
+00:06 +10: All tests passed!

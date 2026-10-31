@@ -7,3 +7,17 @@ build/
 .idea/
 .vscode/
 *.iml
+
+# Local diagnostics and generated previews
+*.log
+preview/apply_frontend_fixes.py
+preview/finish_frontend_fixes.py
+preview/refine_frontend.py
+preview/final_frontend.py
+
+# Backend Laravel (depot independant)
+barellgo_backend/
+
+# Configuration locale (clés du projet)
+config/env.json
+android/.kotlin/

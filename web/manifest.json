@@ -1,11 +1,11 @@
 {
-    "name": "barrelGo",
-    "short_name": "barrelGo",
+    "name": "BarelGo",
+    "short_name": "BarelGo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FFFFFF",
-    "theme_color": "#F8979C",
-    "description": "barrelGo, la plateforme d'expédition de colis.",
+    "theme_color": "#005BF3",
+    "description": "BarelGo, la plateforme d'expédition de colis.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

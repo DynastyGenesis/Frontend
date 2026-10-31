@@ -5,9 +5,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barrel_go/app/app.dart';
+import 'package:barrel_go/core/app_config.dart';
+import 'package:barrel_go/data/app_services.dart';
+import 'package:barrel_go/data/auth/auth_session.dart';
 
 void main() {
   setUpAll(() async {
+    await AppServices.initialize(
+      config: const AppConfig(
+        apiBaseUrl: 'https://api.test/api/v1',
+        supabaseUrl: 'https://test.supabase.co',
+        supabaseKey: 'sb_publishable_test',
+      ),
+      store: MemorySessionStore(),
+    );
     final font = FontLoader('Open Sans')
       ..addFont(rootBundle.load('assets/fonts/open_sans_regular.ttf'))
       ..addFont(rootBundle.load('assets/fonts/open_sans_bold.ttf'));
@@ -28,7 +39,7 @@ void main() {
     size(tester, const Size(1440, 2280));
     final boundary = GlobalKey();
     await tester
-        .pumpWidget(RepaintBoundary(key: boundary, child: const BarrelGoApp()));
+        .pumpWidget(RepaintBoundary(key: boundary, child: const BarelGoApp()));
     await tester.pumpAndSettle();
     await tester.runAsync(() async {
       await precacheImage(
@@ -52,25 +63,19 @@ void main() {
     });
   });
   testWidgets(
-      'Public homepage opens login and client can return to public homepage',
+      'Public homepage opens login, validates the form and returns',
       (tester) async {
     size(tester, const Size(1280, 900));
-    await tester.pumpWidget(const BarrelGoApp());
+    await tester.pumpWidget(const BarelGoApp());
     await tester.pumpAndSettle();
     await tester.tap(find.text('Se connecter — Client').first);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Se connecter'));
     await tester.pumpAndSettle();
     expect(find.text('Saisissez une adresse e-mail valide.'), findsOneWidget);
-    await tester.enterText(find.widgetWithText(TextFormField, 'Adresse e-mail'),
-        'client@example.com');
-    await tester.enterText(
-        find.widgetWithText(TextFormField, 'Mot de passe'), 'demo123');
-    await tester.tap(find.text('Se connecter'));
-    await tester.pumpAndSettle();
-    expect(find.text('iPhone 15 Pro'), findsOneWidget);
+    expect(find.text('Saisissez au moins 6 caractères.'), findsOneWidget);
     expect(tester.takeException(), isNull);
-    await tester.tap(find.byTooltip('Accueil public'));
+    await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('Nos services'), findsWidgets);
     expect(tester.takeException(), isNull);
@@ -78,14 +83,14 @@ void main() {
   testWidgets('Driver login is accessible and mobile links scroll',
       (tester) async {
     size(tester, const Size(390, 844));
-    await tester.pumpWidget(const BarrelGoApp());
+    await tester.pumpWidget(const BarelGoApp());
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     await tester.tap(find.byTooltip('Menu'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Compte livreur').last);
     await tester.pumpAndSettle();
-    expect(find.text('Ships4US · Espace livreur'), findsOneWidget);
+    expect(find.text('BarelGo · Espace livreur'), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Menu'));
@@ -94,23 +99,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Collecte aux États-Unis').hitTestable(), findsOneWidget);
     expect(tester.takeException(), isNull);
-    await tester.tap(find.byTooltip('Menu'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Contact').last);
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Nous contacter'));
-    await tester.pumpAndSettle();
-    expect(find.text('Contactez Ships4US'), findsOneWidget);
-    await tester.enterText(
-        find.widgetWithText(TextFormField, 'Votre nom'), 'Ama');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Adresse e-mail'),
-        'ama@example.com');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Votre message'),
-        'Question sur un colis');
-    await tester.tap(find.text('Valider la demande'));
-    await tester.pumpAndSettle();
-    expect(find.text('Demande simulée. Aucun message n’a été envoyé.'),
-        findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+  testWidgets('sans configuration du backend, une page l’explique',
+      (tester) async {
+    await AppServices.initialize(config: const AppConfig());
+    addTearDown(() => AppServices.initialize(
+          config: const AppConfig(
+            apiBaseUrl: 'https://api.test/api/v1',
+            supabaseUrl: 'https://test.supabase.co',
+            supabaseKey: 'sb_publishable_test',
+          ),
+          store: MemorySessionStore(),
+        ));
+    await tester.pumpWidget(const BarelGoApp());
+    expect(find.text('Configuration du backend manquante'), findsOneWidget);
   });
 }

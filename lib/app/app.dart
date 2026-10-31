@@ -1,107 +1,59 @@
 import 'package:flutter/material.dart';
+import '../data/app_services.dart';
+import '../presentation/pages/client_space/ships_login_page.dart';
 import '../presentation/pages/home/ships_public_home_page.dart';
-import 'package:flutter/foundation.dart';
-import '../core/theme/app_theme.dart';
-import '../presentation/pages/home/home_page.dart';
-import '../presentation/pages/tracking/tracking_page.dart';
-import '../presentation/pages/quote/quote_page.dart';
-import '../presentation/pages/shipments/shipments_page.dart';
-import '../presentation/pages/profile/profile_page.dart';
-import '../presentation/pages/client_space/client_space_page.dart';
-import '../presentation/pages/driver_space/driver_space_page.dart';
 
-class BarrelGoApp extends StatelessWidget {
-  final bool legacy;
-  const BarrelGoApp({super.key, this.legacy = false});
+class BarelGoApp extends StatelessWidget {
+  /// `client` ou `driver` : rouvre directement la page de connexion pour finir
+  /// une connexion Google.
+  final String? resumeSpace;
+  const BarelGoApp({super.key, this.resumeSpace});
+
   @override
   Widget build(BuildContext context) => MaterialApp(
-      title: 'Ships4US',
+      title: 'BarelGo',
       debugShowCheckedModeBanner: false,
-      theme: legacy ? AppTheme.light() : shipsPublicTheme(),
-      home: legacy ? const ClientShell() : const ShipsPublicHomePage());
-}
-
-class ClientShell extends StatefulWidget {
-  const ClientShell({super.key});
-  @override
-  State<ClientShell> createState() => _ClientShellState();
-}
-
-class _ClientShellState extends State<ClientShell> {
-  int index = 0;
-  @override
-  Widget build(BuildContext context) {
-    final pages = [
-      HomePage(
-        onOpenTracking: () => setState(() => index = 1),
-        onOpenQuote: () => setState(() => index = 2),
-        onOpenClient: _openClientSpace,
-        onOpenDriver: _openDriverSpace,
-      ),
-      const TrackingPage(),
-      const QuotePage(),
-      const ShipmentsPage(),
-      const ProfilePage(),
-    ];
-
-    return Scaffold(
-      body: IndexedStack(index: index, children: pages),
-      bottomNavigationBar: kIsWeb
+      theme: shipsPublicTheme(),
+      home: AppServices.instance == null
+          ? const MissingConfigPage()
+          : const ShipsPublicHomePage(),
+      onGenerateInitialRoutes: resumeSpace == null
           ? null
-          : NavigationBar(
-              selectedIndex: index,
-              onDestinationSelected: (value) => setState(() => index = value),
-              destinations: const [
-                NavigationDestination(
-                  icon: Icon(Icons.home_outlined),
-                  selectedIcon: Icon(Icons.home),
-                  label: 'Accueil',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.location_searching),
-                  label: 'Suivi',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.request_quote_outlined),
-                  label: 'Devis',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.inventory_2_outlined),
-                  label: 'Envois',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.person_outline),
-                  label: 'Profil',
-                ),
-              ],
-            ),
-    );
-  }
+          : (_) => [
+                MaterialPageRoute<void>(
+                    builder: (_) => const ShipsPublicHomePage()),
+                MaterialPageRoute<void>(
+                    builder: (_) => ShipsLoginPage(
+                        driver: resumeSpace == 'driver', resumeSession: true)),
+              ]);
+}
 
-  void _openClientSpace() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (context) => ClientSpacePage(
-          startAsGuest: true,
-          onOpenSection: (section) {
-            Navigator.of(context).pop();
-            setState(() => index = section);
-          },
-        ),
-      ),
-    );
-  }
+typedef BarrelGoApp = BarelGoApp;
 
-  void _openDriverSpace() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (context) => DriverSpacePage(
-          onOpenSection: (section) {
-            Navigator.of(context).pop();
-            setState(() => index = section);
-          },
+/// Affichée quand l'application est lancée sans les valeurs du backend.
+class MissingConfigPage extends StatelessWidget {
+  const MissingConfigPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => const Scaffold(
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.settings_outlined, size: 48),
+              SizedBox(height: 16),
+              Text('Configuration du backend manquante',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+              SizedBox(height: 12),
+              Text(
+                'Lancez l’application avec API_BASE_URL, SUPABASE_URL et '
+                'SUPABASE_PUBLISHABLE_KEY, par exemple :\n'
+                'flutter run --dart-define-from-file=config/env.json\n'
+                '(modèle : config/env.example.json).',
+                textAlign: TextAlign.center,
+              ),
+            ]),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

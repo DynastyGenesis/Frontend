@@ -6,6 +6,6 @@ class QuoteService {
       required String service,
       required String direction}) async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
-    return 'Votre demande $direction a été préparée. Un conseiller barrelGo pourra vous confirmer le tarif.';
+    return 'Votre demande $direction a été préparée. Un conseiller BarelGo pourra vous confirmer le tarif.';
   }
 }

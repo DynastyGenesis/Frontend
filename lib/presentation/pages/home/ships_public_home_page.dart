@@ -40,8 +40,7 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
   final scroll = ScrollController();
   final servicesKey = GlobalKey(),
       stepsKey = GlobalKey(),
-      aboutKey = GlobalKey(),
-      contactKey = GlobalKey();
+      aboutKey = GlobalKey();
   @override
   void dispose() {
     scroll.dispose();
@@ -76,10 +75,10 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)));
   Widget driverButton() => OutlinedButton(
       onPressed: driver,
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        const Icon(Icons.local_shipping_outlined, size: 17),
-        const SizedBox(width: 9),
-        const Text('Compte livreur',
+      child: const Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(Icons.local_shipping_outlined, size: 17),
+        SizedBox(width: 9),
+        Text('Compte livreur',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
       ]));
   Widget brand() => Row(mainAxisSize: MainAxisSize.min, children: [
@@ -88,9 +87,9 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text.rich(
               TextSpan(children: [
-                TextSpan(text: 'Ships', style: TextStyle(color: publicNavy)),
+                TextSpan(text: 'Barel', style: TextStyle(color: publicNavy)),
                 TextSpan(
-                    text: '4US', style: TextStyle(color: Color(0xFFF97316)))
+                    text: 'Go', style: TextStyle(color: Color(0xFFF97316)))
               ]),
               style: TextStyle(
                   fontSize: 25,
@@ -171,9 +170,6 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
                                           case 'about':
                                             jump(aboutKey);
                                             break;
-                                          case 'contact':
-                                            jump(contactKey);
-                                            break;
                                           case 'client':
                                             login();
                                             break;
@@ -202,9 +198,6 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
                                                 value: 'about',
                                                 child: Text('À propos')),
                                             PopupMenuItem(
-                                                value: 'contact',
-                                                child: Text('Contact')),
-                                            PopupMenuItem(
                                                 value: 'client',
                                                 child: Text(
                                                     'Se connecter — Client')),
@@ -221,7 +214,6 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
                     services(),
                     steps(),
                     about(),
-                    contact(),
                     footer()
                   ])))
         ]);
@@ -239,9 +231,7 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
             onPressed: () => jump(stepsKey),
             child: text('Comment ça marche', size: 11)),
         TextButton(
-            onPressed: () => jump(aboutKey), child: text('À propos', size: 11)),
-        TextButton(
-            onPressed: () => jump(contactKey), child: text('Contact', size: 11))
+            onPressed: () => jump(aboutKey), child: text('À propos', size: 11))
       ];
   Widget hero(bool wide) {
     final copy =
@@ -265,7 +255,7 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
               letterSpacing: -1)),
       gap(22),
       text(
-          'Collecte, transport et livraison : Ships4US vous accompagne à chaque étape de votre envoi.',
+          'Collecte, transport et livraison : BarelGo vous accompagne à chaque étape de votre envoi.',
           size: 16,
           color: publicMuted),
       gap(26),
@@ -418,13 +408,13 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
   Widget about() => section(LayoutBuilder(builder: (context, b) {
         final company =
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          text('À PROPOS DE SHIPS4US', size: 11, bold: true, color: publicBlue),
+          text('À PROPOS DE BARELGO', size: 11, bold: true, color: publicBlue),
           gap(14),
           text('Un lien entre vos expéditeurs\net vos destinataires.',
               size: 28, bold: true),
           gap(16),
           text(
-              'Ships4US simplifie l’envoi de colis entre les États-Unis et le Togo. Notre équipe vous accompagne pour organiser la collecte, suivre le transport et préparer la livraison.',
+              'BarelGo simplifie l’envoi de colis entre les États-Unis et le Togo. Notre équipe vous accompagne pour organiser la collecte, suivre le transport et préparer la livraison.',
               size: 14,
               color: publicMuted),
           gap(22),
@@ -455,7 +445,7 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 benefit(Icons.local_shipping_outlined, 'Vous êtes livreur ?'),
                 gap(8),
-                text('Votre espace dédié arrive prochainement.',
+                text('Acceptez vos missions et confirmez vos livraisons.',
                     size: 12, color: publicMuted),
                 gap(12),
                 driverButton()
@@ -472,31 +462,6 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [company, gap(24), accounts]);
       }), key: aboutKey);
-  Widget contact() => section(LayoutBuilder(builder: (context, b) {
-        final copy =
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          text('Un besoin d’expédition ?',
-              size: 26, bold: true, color: Colors.white),
-          gap(8),
-          text('Contactez notre équipe pour préparer votre prochain envoi.',
-              size: 13, color: Colors.white)
-        ]);
-        final button = FilledButton.icon(
-            onPressed: contactForm,
-            style: FilledButton.styleFrom(
-                backgroundColor: Colors.white, foregroundColor: publicBlue),
-            icon: const Icon(Icons.mail_outline, size: 19),
-            label: const Text('Nous contacter'));
-        return b.maxWidth > 680
-            ? Row(children: [
-                Expanded(child: copy),
-                const SizedBox(width: 24),
-                button
-              ])
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [copy, gap(22), button]);
-      }), color: publicNavy, key: contactKey);
   Widget footer() => section(Wrap(
           alignment: WrapAlignment.spaceBetween,
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -509,15 +474,12 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
                 onPressed: () => jump(servicesKey),
                 child: text('Nos services', size: 11)),
             TextButton(
-                onPressed: () => jump(contactKey),
-                child: text('Contact', size: 11)),
-            TextButton(
                 onPressed: () => legal('Confidentialité'),
                 child: text('Confidentialité', size: 11)),
             TextButton(
                 onPressed: () => legal('Conditions d’utilisation'),
                 child: text('Conditions d’utilisation', size: 11)),
-            text('© 2026 Ships4US', size: 11, color: publicMuted)
+            text('© 2026 BarelGo', size: 11, color: publicMuted)
           ]));
   void legal(String title) => showDialog<void>(
       context: context,
@@ -530,68 +492,4 @@ class _ShipsPublicHomePageState extends State<ShipsPublicHomePage> {
                     onPressed: () => Navigator.pop(context),
                     child: const Text('Fermer'))
               ]));
-  void contactForm() {
-    final key = GlobalKey<FormState>();
-    showDialog<void>(
-        context: context,
-        builder: (context) => AlertDialog(
-                title: const Text('Contactez Ships4US'),
-                content: SingleChildScrollView(
-                    child: SizedBox(
-                        width: 420,
-                        child: Form(
-                            key: key,
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text(
-                                      'Formulaire de démonstration : aucun message ne sera envoyé.',
-                                      style: TextStyle(
-                                          fontSize: 12, color: publicMuted)),
-                                  gap(),
-                                  TextFormField(
-                                      decoration: const InputDecoration(
-                                          labelText: 'Votre nom'),
-                                      validator: (v) =>
-                                          v == null || v.trim().isEmpty
-                                              ? 'Saisissez votre nom.'
-                                              : null),
-                                  gap(),
-                                  TextFormField(
-                                      decoration: const InputDecoration(
-                                          labelText: 'Adresse e-mail'),
-                                      keyboardType: TextInputType.emailAddress,
-                                      validator: (v) => v == null ||
-                                              !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
-                                                  .hasMatch(v.trim())
-                                          ? 'Saisissez une adresse e-mail valide.'
-                                          : null),
-                                  gap(),
-                                  TextFormField(
-                                      decoration: const InputDecoration(
-                                          labelText: 'Votre message'),
-                                      minLines: 3,
-                                      maxLines: 5,
-                                      validator: (v) =>
-                                          v == null || v.trim().isEmpty
-                                              ? 'Écrivez votre message.'
-                                              : null)
-                                ])))),
-                actions: [
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Annuler')),
-                  FilledButton(
-                      onPressed: () {
-                        if (key.currentState!.validate()) {
-                          Navigator.pop(context);
-                          ScaffoldMessenger.of(this.context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'Demande simulée. Aucun message n’a été envoyé.')));
-                        }
-                      },
-                      child: const Text('Valider la demande'))
-                ]));
-  }
 }

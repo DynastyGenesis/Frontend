@@ -6,6 +6,7 @@ import '../../../data/api/api_exception.dart';
 import '../../../data/app_services.dart';
 import '../../../features/client_flow.dart';
 import '../../../features/driver_flow.dart';
+import '../../widgets/google_logo.dart';
 
 const blue = Color(0xFF005BF3);
 const navy = Color(0xFF08264C);
@@ -318,14 +319,7 @@ class _ShipsLoginPageState extends State<ShipsLoginPage> {
                     const SizedBox(height: 12),
                     OutlinedButton.icon(
                       onPressed: busy ? null : signInWithGoogle,
-                      icon: const Text(
-                        'G',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          color: Color(0xFFDB4437),
-                        ),
-                      ),
+                      icon: const GoogleLogo(),
                       label: const Text('Continuer avec Google'),
                     ),
                     const SizedBox(height: 12),
